@@ -1,0 +1,875 @@
+class Analytic(private val app: Application) {
+
+    companion object {
+
+        private const val ONBOARDING_STARTED = "onboardingScreen_started"
+        private const val ONBOARDING_SKIPPED = "onboardingScreen_skipped"
+        private const val ONBOARDING_MOTIVATION_SET = "onboardingScreen_motivationTime_set"
+        private const val ONBOARDING_MOTIVATION_SKIPPED = "onboardingScreen_motivationTime_skipped"
+
+
+        private const val ONBOARDING_NOTIFICATION_SET = "onboardingScreen_notifications_set"
+        private const val ONBOARDING_NOTIFICATION_SYSTEM_POPUP_ALLOWED = "onboardingScreen_notifications_systemPopup_allowed"
+        private const val ONBOARDING_NOTIFICATION_SYSTEM_POPUP_DENIED = "onboardingScreen_notifications_systemPopup_denied"
+        private const val ONBOARDING_NOTIFICATION_SKIPPED = "onboardingScreen_notifications_skipped"
+        private const val ONBOARDING_NOTIFICATION_EXTRA_POPUP_SET = "onboardingScreen_notifications_extraPopup_set"
+        private const val ONBOARDING_NOTIFICATION_EXTRA_POPUP_SYSTEM_POPUP_ALLOWED = "onboardingScreen_notifications_extraPopup_systemPopup_allowed"
+        private const val ONBOARDING_NOTIFICATION_EXTRA_POPUP_SYSTEM_POPUP_DENIED = "onboardingScreen_notifications_extraPopup_systemPopup_denied"
+        private const val ONBOARDING_NOTIFICATION_EXTRA_POPUP_SKIPPED = "onboardingScreen_notifications_extraPopup_skipped"
+        private const val ONBOARDING_FINISHED = "onboardingScreen_finished"
+        private const val ONBOARDING_PREMIUM_TRIAL_MONTH_BUTTON_CLICKED = "onboardingScreen_premiumTrialMonth_buttonClicked"
+        private const val ONBOARDING_PREMIUM_TRIAL_MONTH_PURCHASED = "onboardingScreen_premiumTrialMonth_purchased"
+        private const val ONBOARDING_PREMIUM_TRIAL_MONTH_CANCELED = "onboardingScreen_premiumTrialMonth_canceled"
+        private const val ONBOARDING_PREMIUM_TRIAL_YEAR_BUTTON_CLICKED = "onboardingScreen_premiumTrialYear_buttonClicked"
+        private const val ONBOARDING_PREMIUM_TRIAL_YEAR_PURCHASED = "onboardingScreen_premiumTrialYear_purchased"
+        private const val ONBOARDING_PREMIUM_TRIAL_YEAR_CANCELED = "onboardingScreen_premiumTrialYear_canceled"
+        private const val ONBOARDING_PREMIUM_PROMOCODE_BUTTON_CLICKED = "onboardingScreen_premiumPromocode_buttonClicked"
+        private const val ONBOARDING_PREMIUM_PROMOCODE_PURCHASED = "onboardingScreen_premiumPromocode_purchased"
+        private const val ONBOARDING_PREMIUM_PROMOCODE_CANCELED = "onboardingScreen_premiumPromocode_canceled"
+        private const val ONBOARDING_PREMIUM_TRIAL_RESTORED = "onboardingScreen_premiumTrial_restored"
+        private const val ONBOARDING_PREMIUM_TRIAL_CLOSED = "onboardingScreen_premiumTrial_closed"
+
+        private const val HOME_OPEN = "homeScreen_open"
+        private const val HOME_NEXT_MOTIVATION_TIME_CLICKED = "homeScreen_nextMotivationTime_clicked"
+        private const val HOME_NEXT_MOTIVATION_TIME_GET_PREMIUM_BUTTON_CLICKED = "home_nextMotivationTime_getPremium_buttonClicked"
+        private const val HOME_NEXT_MOTIVATION_TIME_BUTTON_CLICKED = "home_nextMotivationTime_buttonClicked"
+        private const val HOME_SECOND_MAIN_MATERIAL_GET_PREMIUM_LOCK_ICON_CLICKED = "homeScreen_secondMainMaterial_getPremium_lockIconClicked"
+        private const val HOME_SECOND_MAIN_MATERIAL_GET_PREMIUM_BUTTON_CLICKED = "homeScreen_secondMainMaterial_getPremium_buttonClicked"
+
+        private const val MATERIAL_OPEN = "material_open"
+        private const val MATERIAL_ADD_TO_FAVORITES = "material_addToFavorites"
+        private const val MATERIAL_ADJUST_SETTING_BUTTON_CLICKED = "materialScreenl_adjustSettings_buttonClicked"
+        private const val MATERIAL_ADJUST_SETTING_SET_THEME = "materialScreenl_adjustSettings_setTheme"
+        private const val MATERIAL_READ = "material_read"
+        private const val MATERIAL_LIKE = "material_like"
+        private const val MATERIAL_DISLIKE = "material_dislike"
+        private const val MATERIAL_SHARE_BUTTON_CLICKED = "material_share_buttonClicked"
+        private const val MATERIAL_SHARE_FINISHED = "material_share_finished"
+        private const val MATERIAL_PREMIUM_BANNER_BUTTON_CLICK = "materialScreen_premiumBanner_buttonClick"
+
+        private const val MOTINET_NOTIFICATION_BUTTON_CLICKED = "motinetScreen_notification_buttonClicked"
+
+        private const val PROFILE_MOTIVATION_TYPES_LOCK_ICON_CLICKED = "profileScreen_motivationTypes_lockIconClicked"
+        private const val PROFILE_ARTICLE_TYPES_LOCK_ICON_CLICKED = "profileScreen_articleTypes_lockIconClicked"
+        private const val PROFILE_MOTIVATION_TYPES_LOCKED_TYPES_POPUP_GET_PREMUIUM_BUTTON_CLICKED = "profileScreen_motivationTypes_lockedTypesPopup_getPremium_buttonClicked"
+        private const val PROFILE_ARTICLE_TYPES_LOCKED_TYPES_POPUP_GET_PREMUIUM_BUTTON_CLICKED = "profileScreen_articleTypes_lockedTypesPopup_getPremium_buttonClicked"
+        private const val PROFILE_SET_LANGUAGE = "profileScreen_setLanguage"
+        private const val PROFILE_SET_THEME = "profileScreen_setTheme"
+        private const val PROFILE_NOTIFICATION_BUTTON_CLICKED = "profileScreen_notifications_buttonClicked"
+        private const val PROFILE_NOTIFICATION_ENABLED = "profileScreen_notifications_enabled"
+        private const val PROFILE_NOTIFICATION_DISABLED = "profileScreen_notifications_disabled"
+        private const val PROFILE_NOTIFICATION_PAUSED = "profileScreen_notifications_paused"
+        private const val PROFILE_NOTIFICATION_MOTIVATION_TIME_SET = "profileScreen_notifications_motivationTime_set"
+        private const val PROFILE_WIDGET_BUTTON_CLICKED = "profileScreen_widget_buttonClicked"
+        private const val PROFILE_PREMIUM_BANNER_BUTTON_CLICKED = "profileScreen_premiumBanner_buttonClicked"
+        private const val PROFILE_SHARE_APP_BUTTON_CLICKED = "profileScreen_shareApp_buttonClicked"
+        private const val PROFILE_SHARE_APP_FINISHED = "profileScreen_shareApp_finished"
+
+        private const val PREMIUM_PREMIUM_TRIAL_YEAR_BUTTON_CLICKED = "premiumScreen_premiumTrialYear_buttonClicked"
+        private const val PREMIUM_PREMIUM_TRIAL_YEAR_PURCHASED = "premiumScreen_premiumTrialYear_purchased"
+        private const val PREMIUM_PREMIUM_TRIAL_YEAR_CANCELED = "premiumScreen_premiumTrialYear_canceled"
+        private const val PREMIUM_PREMIUM_TRIAL_MONTH_BUTTON_CLICKED = "premiumScreen_premiumTrialMonth_buttonClicked"
+        private const val PREMIUM_PREMIUM_TRIAL_MONTH_PURCHASED = "premiumScreen_premiumTrialMonth_purchased"
+        private const val PREMIUM_PREMIUM_TRIAL_MONTH_CANCELED = "premiumScreen_premiumTrialMonth_canceled"
+        private const val PREMIUM_PREMIUM_MONTH_BUTTON_CLICKED = "premiumScreen_premiumMonth_buttonClicked"
+        private const val PREMIUM_PREMIUM_MONTH_PURCHASED = "premiumScreen_premiumMonth_purchased"
+        private const val PREMIUM_PREMIUM_MONTH_CANCELED = "premiumScreen_premiumMonth_canceled"
+        private const val PREMIUM_PREMIUM_YEAR_BUTTON_CLICKED = "premiumScreen_premiumYear_buttonClicked"
+        private const val PREMIUM_PREMIUM_YEAR_PURCHASED = "premiumScreen_premiumYear_purchased"
+        private const val PREMIUM_PREMIUM_YEAR_CANCELED = "premiumScreen_premiumYear_canceled"
+        private const val PREMIUM_PREMIUM_PROMOCODE_BUTTON_CLICKED = "premiumScreen_premiumPromocode_buttonClicked"
+        private const val PREMIUM_PREMIUM_PROMOCODE_PURCHASED = "premiumScreen_premiumPromocode_purchased"
+        private const val PREMIUM_PREMIUM_PROMOCODE_CANCELED = "premiumScreen_premiumPromocode_canceled"
+        private const val ONBOARDING_PREMIUM_RESTORED = "onboardingScreen_premium_restored"
+
+        private const val PLANNED_TRIGGERS_NOTIFICATION_POPUP_SHOWN = "plannedTriggers_notificationsPopup_shown"
+        private const val PLANNED_TRIGGERS_NOTIFICATION_POPUP_NOTIFICATION_SET = "plannedTriggers_notificationsPopup_notificationsSet"
+        private const val PLANNED_TRIGGERS_NOTIFICATION_POPUP_SYSTEM_POPUP_ALLOWED = "plannedTriggers_notificationsPopup_systemPopup_allowed"
+        private const val PLANNED_TRIGGERS_NOTIFICATION_POPUP_SYSTEM_POPUP_DENIED = "plannedTriggers_notificationsPopup_systemPopup_denied"
+        private const val PLANNED_TRIGGERS_NOTIFICATION_POPUP_CLOSED = "plannedTriggers_notificationsPopup_closed"
+        private const val PLANNED_TRIGGERS_REVIEW_POPUP_SHOWN = "plannedTriggers_reviewPopup_shown"
+        private const val PLANNED_TRIGGERS_REVIEW_POPUP_LIKE_APP_YES = "plannedTriggers_reviewPopup_likeApp_yes"
+        private const val PLANNED_TRIGGERS_REVIEW_POPUP_REVIEW_APP_YES = "plannedTriggers_reviewPopup_reviewApp_yes"
+        private const val PLANNED_TRIGGERS_REVIEW_POPUP_REVIEW_APP_NO = "plannedTriggers_reviewPopup_reviewApp_no"
+        private const val PLANNED_TRIGGERS_REVIEW_POPUP_LIKE_APP_NO = "plannedTriggers_reviewPopup_likeApp_no"
+        private const val PLANNED_TRIGGERS_REVIEW_POPUP_LEAVE_FEEDBACK_YES = "plannedTriggers_reviewPopup_leaveFeedback_yes"
+        private const val PLANNED_TRIGGERS_REVIEW_POPUP_LEAVE_FEEDBACK_NO = "plannedTriggers_reviewPopup_leaveFeedback_no"
+        private const val PLANNED_TRIGGERS_WIDGET_POPUP_SHOWN = "plannedTriggers_widgetPopup_shown"
+        private const val PLANNED_TRIGGERS_WIDGET_POPUP_SET_WIDGETS_BUTTON_CLICKED = "plannedTriggers_widgetPopup_setWidgetsButtonClicked"
+        private const val PLANNED_TRIGGERS_WIDGET_POPUP_CLOSED = "plannedTriggers_widgetPopup_closed"
+        private const val PLANNED_TRIGGERS_PREMIUM_POPUP_DAY3_SHOWN = "plannedTriggers_premiumPopup_day3_shown"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_BUTTON_CLICKED = "plannedTriggers_premiumTrialMonth_day3_buttonClicked"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_PURCHASED = "plannedTriggers_premiumTrialMonth_day3_purchased"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_CANCELED = "plannedTriggers_premiumTrialMonth_day3_canceled"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_BUTTON_CLICKED = "plannedTriggers_premiumTrialYear_day3_buttonClicked"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_PURCHASED = "plannedTriggers_premiumTrialYear_day3_purchased"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_CANCELED = "plannedTriggers_premiumTrialYear_day3_canceled"
+        private const val PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_BUTTON_CLICKED = "plannedTriggers_premiumPromocode_day3_buttonClicked"
+        private const val PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_PURCHASED = "plannedTriggers_premiumPromocode_day3__purchased"
+        private const val PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_CANCELED = "plannedTriggers_premiumPromocode_day3__canceled"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_DAY3_RESTORED = "plannedTriggers_premiumTrial_day3_restored"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_DAY3_SKIPPED = "plannedTriggers_premiumTrial_day3_skipped"
+
+        private const val ONBOARDING_SET_MOTIVATION_TIME_SELECTED_PRESET = "selectedPreset"
+        private const val ONBOARDING_SET_MOTIVATION_TIME_SELECTED_TIME = "selectedTime"
+        private const val ONBOARDING_MOTIVATION_TIME_SKIPPED_SELECTED_TIME = "selectedPreset"
+        private const val ONBOARDING_MOTIVATION_TIME_SKIPPED_SELECTED_PRESET = "selectedTime"
+        private const val ONBOARDING_PREMIUM_TRIAL_MONTH_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val ONBOARDING_PREMIUM_TRIAL_YEAR_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val ONBOARDING_PREMIUM_PROMOCODE_PURCHASED_PROMOCODE_USED = "promocodeUsed"
+        private const val ONBOARDING_PREMIUM_PROMOCODE_CANCELED_PROMOCODE_USED = "promocodeUsed"
+        private const val ONBOARDING_PREMIUM_PROMOCODE_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val MATERIAL_OPEN_MATERIAL_ID = "materialID"
+        private const val MATERIAL_OPEN_SOURCE = "source"
+        private const val MATERIAL_ADD_TO_FAVORITES_MATERIAL_ID = "materialID"
+        private const val MATERIAL_ADD_TO_FAVORITES_SOURCE = "source"
+        private const val MATERIAL_ADJUST_SETTINGS_SET_THEME_THEME = "theme"
+        private const val MATERIAL_READ_MATERIAL_ID = "materialID"
+        private const val MATERIAL_LIKE_MATERIAL_ID = "materialID"
+        private const val MATERIAL_DISLIKE_MATERIAL_ID = "materialID"
+        private const val MATERIAL_SHARE_BUTTON_CLICKED_MATERIAL_ID = "materialID"
+        private const val MATERIAL_SHARE_FINISHED_MATERIAL_ID = "materialID"
+        private const val PROFILE_SET_LANGUAGE_LANGUAGE = "language"
+        private const val PROFILE_SET_THEME_THEME = "theme"
+        private const val PROFILE_NOTIFICATION_PAUSED_PAUSE_DURATION = "pauseDuration"
+        private const val PROFILE_NOTIFICATION_MOTIVATION_TIME_SET_SELECTED_TIME = "selectedTime"
+        private const val PROFILE_SHARE_APP_BUTTON_CLICKED_MATERIAL_ID = "materialID"
+        private const val PROFILE_SHARE_APP_FINISHED_MATERIAL_ID = "materialID"
+        private const val PREMIUM_PREMIUM_TRIAL_YEAR_BUTTON_CLICKED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_TRIAL_YEAR_PURCHASED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_TRIAL_MONTH_BUTTON_CLICKED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_TRIAL_MONTH_PURCHASED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_TRIAL_MONTH_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val PREMIUM_PREMIUM_MONTH_BUTTON_CLICKED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_MONTH_PURCHASED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_MONTH_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val PREMIUM_PREMIUM_YEAR_BUTTON_CLICKED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_YEAR_PURCHASED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_YEAR_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val PREMIUM_PREMIUM_PROMOCODE_BUTTON_CLICKED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_PROMOCODE_PURCHASED_PROMOCODE_USED = "promocodeUsed"
+        private const val PREMIUM_PREMIUM_PROMOCODE_PURCHASED_SOURCE = "source"
+        private const val PREMIUM_PREMIUM_PROMOCODE_CANCELED_PROMOCODE_USED = "promocodeUsed"
+        private const val PREMIUM_PREMIUM_PROMOCODE_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val ONBOARDING_PREMIUM_RESTORED_SOURCE = "source"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_CANCELED_CANCEL_REASON = "cancelReason"
+        private const val PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_PURCHASED_PROMOCODE_USED = "promocodeUsed"
+        private const val PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_CANCELED_PROMOCODE_USED = "promocodeUsed"
+        private const val PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_CANCELED_CANCEL_REASON = "cancelReason"
+    }
+
+    private fun sendEvent(eventName: String, vararg params: Pair<String, String> = emptyArray()) {
+        val eventValues = HashMap<String, Any>()
+        val json = JSONObject()
+
+        params.forEach {
+            eventValues[it.first] = it.second
+            json.put(it.first, it.second)
+        }
+
+        AppsFlyerLib.getInstance().logEvent(
+            app, eventName, eventValues
+        )
+
+        Amplitude.getInstance().logEvent(eventName, json)
+    }
+
+    fun onBoardingStartEvent() {
+        sendEvent(ONBOARDING_STARTED)
+    }
+
+    fun onBoardingSkippedEvent() {
+        sendEvent(ONBOARDING_SKIPPED)
+    }
+
+    fun onBoardingSetMotivationTimeEvent(
+        selectedPresetValue: String,
+        selectedTimeValue: String,
+    ) {
+        val param1 = ONBOARDING_SET_MOTIVATION_TIME_SELECTED_PRESET to selectedPresetValue
+        val param2 = ONBOARDING_SET_MOTIVATION_TIME_SELECTED_TIME to selectedTimeValue
+
+        sendEvent(
+            ONBOARDING_MOTIVATION_SET,
+            param1,
+            param2
+        )
+    }
+
+    fun onBoardingMotivationTimeSkippedEvent(
+        selectedPresetValue: String,
+        selectedTimeValue: String,
+    ) {
+        val param1 = ONBOARDING_MOTIVATION_TIME_SKIPPED_SELECTED_PRESET to selectedPresetValue
+        val param2 = ONBOARDING_MOTIVATION_TIME_SKIPPED_SELECTED_TIME to selectedTimeValue
+
+        sendEvent(
+            ONBOARDING_MOTIVATION_SKIPPED,
+            param1,
+            param2
+        )
+    }
+
+    fun onBoardingNotificationSetEvent() {
+        sendEvent(ONBOARDING_NOTIFICATION_SET)
+    }
+
+    fun onBoardingNotificationDeniedEvent() {
+        sendEvent(ONBOARDING_NOTIFICATION_SYSTEM_POPUP_DENIED)
+    }
+
+    fun onBoardingNotificationAllowedEvent() {
+        sendEvent(ONBOARDING_NOTIFICATION_SYSTEM_POPUP_ALLOWED)
+    }
+
+    fun onBoardingNotificationSkippedEvent() {
+        sendEvent(ONBOARDING_NOTIFICATION_SKIPPED)
+    }
+
+    fun onBoardingNotificationExtraPopUpSetEvent(){
+        sendEvent(ONBOARDING_NOTIFICATION_EXTRA_POPUP_SET)
+    }
+
+    fun onBoardingNotificationExtraPopUpSystemPopupAllowedEvent(){
+        sendEvent(ONBOARDING_NOTIFICATION_EXTRA_POPUP_SYSTEM_POPUP_ALLOWED)
+    }
+
+    fun onBoardingNotificationExtraPopUpSystemPopupDeniedEvent(){
+        sendEvent(ONBOARDING_NOTIFICATION_EXTRA_POPUP_SYSTEM_POPUP_DENIED)
+    }
+
+    fun onBoardingNotificationExtraPopUpSkippedEvent(){
+        sendEvent(ONBOARDING_NOTIFICATION_EXTRA_POPUP_SKIPPED)
+    }
+
+    fun onBoardingFinishedEvent(){
+        sendEvent(ONBOARDING_FINISHED)
+    }
+
+    fun onBoardingPremiumTrialMonthButtonClickedEvent(){
+        sendEvent(ONBOARDING_PREMIUM_TRIAL_MONTH_BUTTON_CLICKED)
+    }
+
+    fun onBoardingPremiumTrialMonthPurchasedEvent(){
+        sendEvent(ONBOARDING_PREMIUM_TRIAL_MONTH_PURCHASED)
+    }
+
+    fun onBoardingPremiumTrialMonthCanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = ONBOARDING_PREMIUM_TRIAL_MONTH_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            ONBOARDING_PREMIUM_TRIAL_MONTH_CANCELED,
+            param)
+    }
+
+    fun onBoardingPremiumTrialYearButtonClickedEvent(){
+        sendEvent(ONBOARDING_PREMIUM_TRIAL_YEAR_BUTTON_CLICKED)
+    }
+
+    fun onBoardingPremiumTrialYearPurchasedEvent(){
+        sendEvent(ONBOARDING_PREMIUM_TRIAL_YEAR_PURCHASED)
+    }
+
+    fun onBoardingPremiumTrialYearCanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = ONBOARDING_PREMIUM_TRIAL_YEAR_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            ONBOARDING_PREMIUM_TRIAL_YEAR_CANCELED,
+            param)
+    }
+
+    fun onBoardingPremiumPromocodeButtonClickedEvent(){
+        sendEvent(ONBOARDING_PREMIUM_PROMOCODE_BUTTON_CLICKED)
+    }
+
+    fun onBoardingPremiumPromocodePurchasedEvent(
+        promocodeUsedValue: String
+    ){
+        val param = ONBOARDING_PREMIUM_PROMOCODE_PURCHASED_PROMOCODE_USED to promocodeUsedValue
+
+        sendEvent(
+            ONBOARDING_PREMIUM_PROMOCODE_PURCHASED,
+            param
+        )
+    }
+
+    fun onBoardingPremiumPromocodeCanceledEvent(
+        promocodeUsedValue: String,
+        canselReasonValue: String
+    ){
+        val param1 = ONBOARDING_PREMIUM_PROMOCODE_CANCELED_PROMOCODE_USED to promocodeUsedValue
+        val param2 = ONBOARDING_PREMIUM_PROMOCODE_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            ONBOARDING_PREMIUM_PROMOCODE_CANCELED,
+            param1,
+            param2
+        )
+    }
+
+    fun onBoardingPremiumTrialRestoredEvent(){
+        sendEvent(ONBOARDING_PREMIUM_TRIAL_RESTORED)
+    }
+
+    fun onBoardingPremiumTrialClosedEvent(){
+        sendEvent(ONBOARDING_PREMIUM_TRIAL_CLOSED)
+    }
+
+    fun homeOpenEvent(){
+        sendEvent(HOME_OPEN)
+    }
+
+    fun homeNextMotivationTimeClickedEvent(){
+        sendEvent(HOME_NEXT_MOTIVATION_TIME_CLICKED)
+    }
+
+    fun homeNextMotivationTimeGetPremiumButtonClickedEvent(){
+        sendEvent(HOME_NEXT_MOTIVATION_TIME_GET_PREMIUM_BUTTON_CLICKED)
+    }
+
+    fun homeNextMotivationTimeButtonClickedEvent(){
+        sendEvent(HOME_NEXT_MOTIVATION_TIME_BUTTON_CLICKED)
+    }
+
+    fun homeSecondMainMaterialGetPremiumLockIconClickedEvent(){
+        sendEvent(HOME_SECOND_MAIN_MATERIAL_GET_PREMIUM_LOCK_ICON_CLICKED)
+    }
+
+    fun homeSecondMainMaterialGetPremiumButtonClickedEvent(){
+        sendEvent(HOME_SECOND_MAIN_MATERIAL_GET_PREMIUM_BUTTON_CLICKED)
+    }
+
+    fun materialOpenEvent(
+        materialIDValue: String,
+        sourceValue: String
+    ){
+        val param1 = MATERIAL_OPEN_MATERIAL_ID to materialIDValue
+        val param2 = MATERIAL_OPEN_SOURCE to sourceValue
+
+        sendEvent(
+            MATERIAL_OPEN,
+            param1,
+            param2
+        )
+    }
+
+    fun materialAddToFavoritesEvent(
+        materialIDValue: String,
+        sourceValue: String
+    ){
+        val param1 = MATERIAL_ADD_TO_FAVORITES_MATERIAL_ID to materialIDValue
+        val param2 = MATERIAL_ADD_TO_FAVORITES_SOURCE to sourceValue
+
+        sendEvent(
+            MATERIAL_ADD_TO_FAVORITES,
+            param1,
+            param2
+        )
+    }
+
+    fun materialAdjustSettingsButtonClickedEvent(){
+        sendEvent(MATERIAL_ADJUST_SETTING_BUTTON_CLICKED)
+    }
+
+    fun materialAdjustSettingsSetThemeEvent(
+        themeValue: String
+    ){
+        val param = MATERIAL_ADJUST_SETTINGS_SET_THEME_THEME to themeValue
+
+        sendEvent(
+            MATERIAL_ADJUST_SETTING_SET_THEME,
+            param
+        )
+    }
+
+    fun materialReadEvent(
+        materialIDValue: String
+    ){
+        val param = MATERIAL_READ_MATERIAL_ID to materialIDValue
+
+        sendEvent(
+            MATERIAL_READ,
+            param
+        )
+    }
+
+    fun materialLikeEvent(
+        materialIDValue: String
+    ){
+        val param = MATERIAL_LIKE_MATERIAL_ID to materialIDValue
+
+        sendEvent(
+            MATERIAL_LIKE,
+            param
+        )
+    }
+
+    fun materialDislikeEvent(
+        materialIDValue: String
+    ){
+        val param = MATERIAL_DISLIKE_MATERIAL_ID to materialIDValue
+
+        sendEvent(
+            MATERIAL_DISLIKE,
+            param
+        )
+    }
+
+    fun materialShareButtonClickedEvent(
+        materialIDValue: String
+    ){
+        val param = MATERIAL_SHARE_BUTTON_CLICKED_MATERIAL_ID to materialIDValue
+
+        sendEvent(
+            MATERIAL_SHARE_BUTTON_CLICKED,
+            param
+        )
+    }
+
+    fun materialShareFinishedEvent(
+        materialIDValue: String
+    ){
+        val param = MATERIAL_SHARE_FINISHED_MATERIAL_ID to materialIDValue
+
+        sendEvent(
+            MATERIAL_SHARE_FINISHED,
+            param
+        )
+    }
+
+    fun materialPremiumBannerButtonClickEvent(){
+        sendEvent(MATERIAL_PREMIUM_BANNER_BUTTON_CLICK)
+    }
+
+    fun motinetNotificationButtonClickedEvent(){
+        sendEvent(MOTINET_NOTIFICATION_BUTTON_CLICKED)
+    }
+
+    fun profileMotivationTypesLockIconClickedEvent(){
+        sendEvent(PROFILE_MOTIVATION_TYPES_LOCK_ICON_CLICKED)
+    }
+
+    fun profileArticleTypesLockIconClickedEvent(){
+        sendEvent(PROFILE_ARTICLE_TYPES_LOCK_ICON_CLICKED)
+    }
+
+    fun profileMotivationTypesLockedTypesPopupGetPremiumButtonClickedEvent(){
+        sendEvent(PROFILE_MOTIVATION_TYPES_LOCKED_TYPES_POPUP_GET_PREMUIUM_BUTTON_CLICKED)
+    }
+
+    fun profileArticleTypesLockedTypesPopUpGetPremiumButtonClickedEvent(){
+        sendEvent(PROFILE_ARTICLE_TYPES_LOCKED_TYPES_POPUP_GET_PREMUIUM_BUTTON_CLICKED)
+    }
+
+    fun profileSetLanguageEvent(
+        languageValue: String
+    ){
+        val param = PROFILE_SET_LANGUAGE_LANGUAGE to languageValue
+
+        sendEvent(
+            PROFILE_SET_LANGUAGE,
+            param
+        )
+    }
+
+    fun profileSetThemeEvent(
+        themeValue: String
+    ){
+        val param = PROFILE_SET_THEME_THEME to themeValue
+
+        sendEvent(
+            PROFILE_SET_THEME,
+            param
+        )
+    }
+
+    fun profileNotificationsButtonClickedEvent(){
+        sendEvent(PROFILE_NOTIFICATION_BUTTON_CLICKED)
+    }
+
+    fun profileNotificationsEnabledEvent(){
+        sendEvent(PROFILE_NOTIFICATION_ENABLED)
+    }
+
+    fun profileNotificationsDisabledEvent(){
+        sendEvent(PROFILE_NOTIFICATION_DISABLED)
+    }
+
+    fun profileNotificationsPausedEvent(
+        pauseDurationValue: String
+    ){
+        val param = PROFILE_NOTIFICATION_PAUSED_PAUSE_DURATION to pauseDurationValue
+
+        sendEvent(
+            PROFILE_NOTIFICATION_PAUSED,
+            param
+        )
+    }
+
+    fun profileNotificationsMotivationTimeSetEvent(
+        selectedTimeValue: String
+    ){
+        val param = PROFILE_NOTIFICATION_MOTIVATION_TIME_SET_SELECTED_TIME to selectedTimeValue
+
+        sendEvent(
+            PROFILE_NOTIFICATION_MOTIVATION_TIME_SET,
+            param
+        )
+    }
+
+    fun profileWidgetButtonClickedEvent(){
+        sendEvent(PROFILE_WIDGET_BUTTON_CLICKED)
+    }
+
+    fun profilePremiumBannerButtonClickedEvent(){
+        sendEvent(PROFILE_PREMIUM_BANNER_BUTTON_CLICKED)
+    }
+
+    fun profileShareAppButtonClickedEvent(
+        materialIDValue: String
+    ){
+        val param = PROFILE_SHARE_APP_BUTTON_CLICKED_MATERIAL_ID to materialIDValue
+
+        sendEvent(
+            PROFILE_SHARE_APP_BUTTON_CLICKED,
+            param
+        )
+    }
+
+    fun profileShareAppFinishedEvent(
+        materialIDValue: String
+    ){
+        val param = PROFILE_SHARE_APP_FINISHED_MATERIAL_ID to materialIDValue
+
+        sendEvent(
+            PROFILE_SHARE_APP_FINISHED,
+            param
+        )
+    }
+
+    fun premiumPremiumTrialYearButtonClickedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_TRIAL_YEAR_BUTTON_CLICKED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_TRIAL_YEAR_BUTTON_CLICKED,
+            param
+        )
+    }
+
+    fun premiumPremiumTrialYearPurchasedEvent(
+        sourceValue: String
+    ){
+        val param = "source" to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_TRIAL_YEAR_PURCHASED,
+            param
+        )
+    }
+
+    fun premiumPremiumTrialYearCanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = PREMIUM_PREMIUM_TRIAL_YEAR_PURCHASED_SOURCE to canselReasonValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_TRIAL_YEAR_CANCELED,
+            param
+        )
+    }
+
+    fun premiumPremiumTrialMonthButtonClickedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_TRIAL_MONTH_BUTTON_CLICKED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_TRIAL_MONTH_BUTTON_CLICKED,
+            param
+        )
+    }
+
+    fun premiumPremiumTrialMonthPurchasedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_TRIAL_MONTH_PURCHASED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_TRIAL_MONTH_PURCHASED,
+            param
+        )
+    }
+
+    fun premiumPremiumTrialMonthCanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = PREMIUM_PREMIUM_TRIAL_MONTH_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_TRIAL_MONTH_CANCELED,
+            param
+        )
+    }
+
+    fun premiumPremiumMonthButtonClickedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_MONTH_BUTTON_CLICKED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_MONTH_BUTTON_CLICKED,
+            param
+        )
+    }
+
+    fun premiumPremiumMonthPurchasedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_MONTH_PURCHASED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_MONTH_PURCHASED,
+            param
+        )
+    }
+
+    fun premiumPremiumMonthCanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = PREMIUM_PREMIUM_MONTH_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_MONTH_CANCELED,
+            param
+        )
+    }
+
+    fun premiumPremiumYearButtonClickedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_YEAR_BUTTON_CLICKED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_YEAR_BUTTON_CLICKED,
+            param
+        )
+    }
+
+    fun premiumPremiumYearPurchasedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_YEAR_PURCHASED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_YEAR_PURCHASED,
+            param
+        )
+    }
+
+    fun premiumPremiumYearCanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = PREMIUM_PREMIUM_YEAR_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_YEAR_CANCELED,
+            param
+        )
+    }
+
+    fun premiumPremiumPromocodeButtonClickedEvent(
+        sourceValue: String
+    ){
+        val param = PREMIUM_PREMIUM_PROMOCODE_BUTTON_CLICKED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_PROMOCODE_BUTTON_CLICKED,
+            param
+        )
+    }
+
+    fun premiumPremiumPromocodePurchasedEvent(
+        promocodeUsedValue: String,
+        sourceValue: String
+    ){
+        val param1 = PREMIUM_PREMIUM_PROMOCODE_PURCHASED_PROMOCODE_USED to promocodeUsedValue
+        val param2 = PREMIUM_PREMIUM_PROMOCODE_PURCHASED_SOURCE to sourceValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_PROMOCODE_PURCHASED,
+            param1,
+            param2
+        )
+    }
+
+    fun premiumPremiumPromocodeCanceledEvent(
+        promocodeUsedValue: String,
+        canselReasonValue: String
+    ){
+        val param1 = PREMIUM_PREMIUM_PROMOCODE_CANCELED_PROMOCODE_USED to promocodeUsedValue
+        val param2 = PREMIUM_PREMIUM_PROMOCODE_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            PREMIUM_PREMIUM_PROMOCODE_CANCELED,
+            param1,
+            param2
+        )
+    }
+
+    fun onBoardingPremiumRestoredEvent(
+        sourceValue: String
+    ){
+        val param = ONBOARDING_PREMIUM_RESTORED_SOURCE to sourceValue
+
+        sendEvent(
+            ONBOARDING_PREMIUM_RESTORED,
+            param
+        )
+    }
+
+    fun plannedTriggersNotificationsPopUpShownEvent(){
+        sendEvent(PLANNED_TRIGGERS_NOTIFICATION_POPUP_SHOWN)
+    }
+
+    fun plannedTriggersNotificationsPopUpNotificationsSetEvent(){
+        sendEvent(PLANNED_TRIGGERS_NOTIFICATION_POPUP_NOTIFICATION_SET)
+    }
+
+    fun plannedTriggersNotificationsPopUpSystemPopUpAllowedEvent(){
+        sendEvent(PLANNED_TRIGGERS_NOTIFICATION_POPUP_SYSTEM_POPUP_ALLOWED)
+    }
+
+    fun plannedTriggersNotificationsPopUpSystemPopUpDeniedEvent(){
+        sendEvent(PLANNED_TRIGGERS_NOTIFICATION_POPUP_SYSTEM_POPUP_DENIED)
+    }
+
+    fun plannedTriggersNotificationsPopUpClosedEvent(){
+        sendEvent(PLANNED_TRIGGERS_NOTIFICATION_POPUP_CLOSED)
+    }
+
+    fun plannedTriggersReviewPopUpShownEvent(){
+        sendEvent(PLANNED_TRIGGERS_REVIEW_POPUP_SHOWN)
+    }
+
+    fun plannedTriggersReviewPopUpLikeAppYesEvent(){
+        sendEvent(PLANNED_TRIGGERS_REVIEW_POPUP_LIKE_APP_YES)
+    }
+
+    fun plannedTriggersReviewPopUpReviewAppYesEvent(){
+        sendEvent(PLANNED_TRIGGERS_REVIEW_POPUP_REVIEW_APP_YES)
+    }
+
+    fun plannedTriggersReviewPopUpReviewAppNoEvent(){
+        sendEvent(PLANNED_TRIGGERS_REVIEW_POPUP_REVIEW_APP_NO)
+    }
+
+    fun plannedTriggersReviewPopUpLikeAppNoEvent(){
+        sendEvent(PLANNED_TRIGGERS_REVIEW_POPUP_LIKE_APP_NO)
+    }
+
+    fun plannedTriggersReviewPopUpLeaveFeedbackYesEvent(){
+        sendEvent(PLANNED_TRIGGERS_REVIEW_POPUP_LEAVE_FEEDBACK_YES)
+    }
+
+    fun plannedTriggersReviewPopUpLeaveFeedbackNoEvent(){
+        sendEvent(PLANNED_TRIGGERS_REVIEW_POPUP_LEAVE_FEEDBACK_NO)
+    }
+
+    fun plannedTriggersWidgetPopUpShownEvent(){
+        sendEvent(PLANNED_TRIGGERS_WIDGET_POPUP_SHOWN)
+    }
+
+    fun plannedTriggersWidgetPopUpSetWidgetsButtonClickedEvent(){
+        sendEvent(PLANNED_TRIGGERS_WIDGET_POPUP_SET_WIDGETS_BUTTON_CLICKED)
+    }
+
+    fun plannedTriggersWidgetPopUpClosedEvent(){
+        sendEvent(PLANNED_TRIGGERS_WIDGET_POPUP_CLOSED)
+    }
+
+    fun plannedTriggersPremiumPopUpDay3ShownEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_POPUP_DAY3_SHOWN)
+    }
+
+    fun plannedTriggersPremiumTrialMonthDay3ButtonClickedEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_BUTTON_CLICKED)
+    }
+
+    fun plannedTriggersPremiumTrialMonthDay3PurchasedEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_PURCHASED)
+    }
+
+    fun plannedTriggersPremiumTrialMonthDay3CanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            PLANNED_TRIGGERS_PREMIUM_TRIAL_MONTH_DAY3_CANCELED,
+            param
+        )
+    }
+
+    fun plannedTriggersPremiumTrialYearDay3ButtonClickedEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_BUTTON_CLICKED)
+    }
+
+    fun plannedTriggersPremiumTrialYearDay3PurchasedEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_PURCHASED)
+    }
+
+    fun plannedTriggersPremiumTrialYearDay3CanceledEvent(
+        canselReasonValue: String
+    ){
+        val param = PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            PLANNED_TRIGGERS_PREMIUM_TRIAL_YEAR_DAY3_CANCELED,
+            param
+        )
+    }
+
+    fun plannedTriggersPremiumPromocodeDay3ButtonClickedEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_BUTTON_CLICKED)
+    }
+
+    fun plannedTriggersPremiumPromocodeDay3PurchasedEvent(
+        promocodeUsedValue: String
+    ){
+        val param = PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_PURCHASED_PROMOCODE_USED to promocodeUsedValue
+
+        sendEvent(
+            PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_PURCHASED,
+            param
+        )
+    }
+
+    fun plannedTriggersPremiumPromocodeDay3CanceledEvent(
+        promocodeUsedValue: String,
+        canselReasonValue: String
+    ){
+        val param1 = PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_CANCELED_PROMOCODE_USED to promocodeUsedValue
+        val param2 = PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_CANCELED_CANCEL_REASON to canselReasonValue
+
+        sendEvent(
+            PLANNED_TRIGGERS_PREMIUM_PROMOCODE_DAY3_CANCELED,
+            param1,
+            param2
+        )
+    }
+
+    fun plannedTriggersPremiumTrialDay3RestoredEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_TRIAL_DAY3_RESTORED)
+    }
+
+    fun plannedTriggersPremiumTrialDay3SkippedEvent(){
+        sendEvent(PLANNED_TRIGGERS_PREMIUM_TRIAL_DAY3_SKIPPED)
+    }
+}
